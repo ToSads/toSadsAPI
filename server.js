@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require("express")
+const serverless = require('serverless-http')
 const examRouter = require("./routes/examRoutes.js")
 const app = express()
 const cors = require("cors")
@@ -9,6 +10,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use("/exams", examRouter)
+module.exports.handler = serverless(app)
 
 mongoose.connect(process.env.MONGO_URI)
 .then(()=>console.log("connected"))
